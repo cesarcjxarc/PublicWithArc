@@ -4,29 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quarter Progress</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: transparent; display: flex; align-items: flex-start; justify-content: center; padding: 16px; }
-  .qp-wrap { font-family: 'Inter', sans-serif; padding: 28px; background: #fff; border-radius: 16px; border: 1px solid #ebebeb; width: 100%; max-width: 480px; }
-  .qp-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
-  .qp-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: #111; margin: 0 0 24px; }
+  body { background: transparent; display: flex; align-items: flex-start; justify-content: center; padding: 16px; font-family: 'Inter', sans-serif; }
+
+  .qp-wrap { padding: 28px; background: #fff; border-radius: 16px; border: 1px solid #e8e8e8; width: 100%; max-width: 480px; }
+
+  .qp-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 4px; }
+  .qp-title { font-size: 16px; font-weight: 600; color: #111; margin: 0 0 24px; }
+
   .qp-hero { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 24px; }
-  .qp-pct-num { font-family: 'Syne', sans-serif; font-size: 72px; font-weight: 800; letter-spacing: -3px; color: #111; line-height: 1; }
-  .qp-pct-sym { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 700; color: #ccc; letter-spacing: -1px; }
-  .qp-hero-sub { display: flex; flex-direction: column; gap: 6px; padding-bottom: 10px; }
+  .qp-pct-num { font-size: 64px; font-weight: 700; letter-spacing: -2px; color: #111; line-height: 1; }
+  .qp-pct-sym { font-size: 32px; font-weight: 400; color: #bbb; letter-spacing: -1px; }
+  .qp-hero-sub { display: flex; flex-direction: column; gap: 5px; padding-bottom: 8px; }
   .qp-hero-line { font-size: 13px; color: #888; }
-  .qp-hero-line strong { color: #111; font-weight: 500; }
-  .qp-bar-track { width: 100%; height: 14px; background: #f2f2f0; border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
+  .qp-hero-line strong { color: #333; font-weight: 500; }
+
+  .qp-bar-track { width: 100%; height: 10px; background: #f0f0f0; border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
   .qp-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
   .qp-bar-labels { display: flex; justify-content: space-between; font-size: 11px; color: #bbb; margin-bottom: 20px; }
+
   .qp-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #ebebeb; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
   .qp-stat { background: #fafafa; padding: 12px 14px; }
-  .qp-stat-label { font-size: 10px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-  .qp-stat-val { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: #111; }
+  .qp-stat-label { font-size: 10px; font-weight: 600; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .qp-stat-val { font-size: 20px; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+
   .qp-footer { display: flex; align-items: center; justify-content: space-between; }
-  .qp-today { font-size: 12px; color: #999; }
-  .qp-today strong { color: #111; font-weight: 500; }
+  .qp-today { font-size: 12px; color: #aaa; }
+  .qp-today strong { color: #555; font-weight: 500; }
   .qp-badge { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; }
   .badge-early { background: #eef7f2; color: #2e7d52; }
   .badge-mid   { background: #fff8e6; color: #a06b00; }
@@ -52,9 +58,9 @@ function go() {
   const daysLeft = totalDays - elapsedDays;
   const pctR = Math.round(pct);
 
-  const barColor = pct >= 85 ? '#e05252' : pct >= 60 ? '#e8a020' : '#111';
-  const badgeClass = pct >= 85 ? 'badge-late' : pct >= 60 ? 'badge-mid' : 'badge-early';
-  const badgeText = pct >= 85 ? 'Final stretch' : pct >= 60 ? 'Mid-quarter' : 'Early quarter';
+  const barColor = pct >= 85 ? '#e05252' : pct >= 60 ? '#e8a020' : '#2563eb';
+  const badgeClass = pct >= 66 ? 'badge-late' : pct >= 33 ? 'badge-mid' : 'badge-early';
+  const badgeText = pct >= 66 ? 'Final stretch' : pct >= 33 ? 'Mid-quarter' : 'Early quarter';
 
   const fd = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   const todayStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' });
